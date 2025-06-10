@@ -1,0 +1,20 @@
+# Gunakan base image Python yang kompatibel dengan TensorFlow
+# Python 3.10 atau 3.11 adalah pilihan yang baik dan didukung TensorFlow 2.10 hingga 2.15
+FROM python:3.10-slim-buster
+
+# Set working directory di dalam container
+WORKDIR /app
+
+# Copy requirements.txt dan instal dependensi
+COPY requirements.txt ./
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy sisa kode aplikasi Anda
+COPY . .
+
+# Expose port yang digunakan Streamlit (optional, tapi baik untuk kejelasan)
+EXPOSE 8501
+
+# Perintah untuk menjalankan aplikasi Streamlit Anda
+# Pastikan App2.py adalah nama file utama aplikasi Anda
+CMD ["streamlit", "run", "App2.py", "--server.port=8501", "--server.enableCORS=false", "--server.enableXsrfProtection=false"]
